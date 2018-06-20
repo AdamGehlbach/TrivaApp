@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,12 +27,14 @@ public class QuestionCreatorFragment extends Fragment {
     @BindView(R.id.third_wrong_answer)
     protected EditText thirdWrongAnswerInput;
 
+    private Callback callback;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_question_creater,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_question_creater, container, false);
+        ButterKnife.bind(this, view);
 
         return view;
     }
@@ -44,19 +47,36 @@ public class QuestionCreatorFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-       @OnClick(R.id.save_question_button)
+
+    @OnClick(R.id.save_question_button)
     protected void addQuestion() {
 
-        String questionTitle = question.getText().toString();
-        String correctAnswer = this.correctAnswerInput.getText().toString();
-        String firstWrongAnswer = this.firsWrongAnswerInput.getText().toString();
-        String secondWrongAnswer = this.secondWrongAnswerInput.getText().toString();
-        String thirdWrongAnswer = this.thirdWrongAnswerInput.getText().toString();
+        if (question.getText().toString().isEmpty() || correctAnswerInput.getText().toString().isEmpty() || firsWrongAnswerInput.getText().toString().isEmpty() || secondWrongAnswerInput.getText().toString().isEmpty()|| thirdWrongAnswerInput.getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), "All fields are required", Toast.LENGTH_SHORT).show();
+        } else {
 
-        Question question = new Question(questionTitle, correctAnswer, firstWrongAnswer, secondWrongAnswer, thirdWrongAnswer);
 
-        
+            //Gets user input from the EditTexts and saves them as variables
+            String questionTitle = question.getText().toString();
+            String correctAnswer = correctAnswerInput.getText().toString();
+            String firstWrongAnswer = firsWrongAnswerInput.getText().toString();
+            String secondWrongAnswer = secondWrongAnswerInput.getText().toString();
+            String thirdWrongAnswer = thirdWrongAnswerInput.getText().toString();
+
+            //Takes variable created from user input and saves them in the Question object
+            Question question = new Question(questionTitle, correctAnswer, firstWrongAnswer, secondWrongAnswer, thirdWrongAnswer);
+
+            //sends question object we just created to the callback method to be saved.
+            callback.questionSaved(question);
+        }
     }
 
+    public void attachParent(Callback callback) {
+        this.callback = callback;
+    }
+
+    public interface Callback {
+        void questionSaved(Question question);
+    }
 
 }
