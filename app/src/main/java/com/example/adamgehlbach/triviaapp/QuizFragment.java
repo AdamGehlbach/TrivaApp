@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -17,6 +18,19 @@ public class QuizFragment extends Fragment {
 
     @BindView(R.id.quiz_question_textview)
     protected TextView quizQuestion;
+
+    @BindView(R.id.correct_answer)
+    protected Button correctanswer;
+
+    @BindView(R.id.wrong_answer1)
+    protected Button wronganswer1;
+
+    @BindView(R.id.wrong_answer2)
+    protected Button wronganswer2;
+
+    @BindView(R.id.wrong_answer3)
+    protected Button wronganswer3;
+
 
     @Nullable
     @Override
@@ -37,8 +51,26 @@ public class QuizFragment extends Fragment {
     }
     @OnClick(R.id.next_question_button)
         protected void nextQuestion () {
+    }
+    @OnClick(R.id.correct_answer)
+    protected void buttonOneclicked(){
 
     }
+    @OnClick(R.id.wrong_answer1)
+    protected void buttonTwoClicked(){
 
+    }
+    @OnClick(R.id.wrong_answer2)
+    protected void buttonThreeClicked(){
+
+    }
+    @OnClick(R.id.wrong_answer3)
+    protected void buttonFourClicked(){
+
+    }
+    @OnClick(R.id.next_question_button)
+    protected void buttonNextClicked(){
+
+    }
 
 }

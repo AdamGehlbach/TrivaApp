@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import butterknife.BindView;
@@ -19,13 +18,13 @@ public class QuestionCreatorFragment extends Fragment {
     @BindView(R.id.question)
     protected EditText question;
     @BindView(R.id.correct_answer)
-    protected EditText correctAnswer;
+    protected EditText correctAnswerInput;
     @BindView(R.id.first_wrong_answer)
-    protected EditText firsWrongAnswer;
+    protected EditText firsWrongAnswerInput;
     @BindView(R.id.second_wrong_answer)
-    protected EditText secondWrongAnswer;
+    protected EditText secondWrongAnswerInput;
     @BindView(R.id.third_wrong_answer)
-    protected EditText thirdWrongAnswer;
+    protected EditText thirdWrongAnswerInput;
 
 
     @Nullable
@@ -48,7 +47,15 @@ public class QuestionCreatorFragment extends Fragment {
        @OnClick(R.id.save_question_button)
     protected void addQuestion() {
 
+        String questionTitle = question.getText().toString();
+        String correctAnswer = this.correctAnswerInput.getText().toString();
+        String firstWrongAnswer = this.firsWrongAnswerInput.getText().toString();
+        String secondWrongAnswer = this.secondWrongAnswerInput.getText().toString();
+        String thirdWrongAnswer = this.thirdWrongAnswerInput.getText().toString();
 
+        Question question = new Question(questionTitle, correctAnswer, firstWrongAnswer, secondWrongAnswer, thirdWrongAnswer);
+
+        
     }
 
 
