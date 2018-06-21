@@ -10,9 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.adamgehlbach.triviaapp.MainActivity.QUESTIONS_LIST;
 
 public class QuizFragment extends Fragment {
 
@@ -30,6 +35,10 @@ public class QuizFragment extends Fragment {
 
     @BindView(R.id.wrong_answer3)
     protected Button wronganswer3;
+
+    private List<Question> questionsList;
+    private Question question;
+    private int questionListPosition = 0;
 
 
     @Nullable
@@ -49,6 +58,45 @@ public class QuizFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        questionsList = getArguments().getParcelableArrayList(QUESTIONS_LIST);
+
+        populateQuizContent();
+    }
+
+    private void populateQuizContent() {
+        question = questionsList.get(questionListPosition);
+        quizQuestion.setText(question.getQuestion());
+
+        List<Button> buttonList = new ArrayList<>();
+        buttonList.add(correctanswer);
+        buttonList.add(wronganswer1);
+        buttonList.add(wronganswer2);
+        buttonList.add(wronganswer3);
+
+        List<String> possibleAnswersList = new ArrayList<>();
+        possibleAnswersList.add(question.getCorrectAnswer());
+        possibleAnswersList.add(question.getIncorrectAnswerOne());
+        possibleAnswersList.add(question.getIncorrectAnswerTwo());
+        possibleAnswersList.add(question.getIncorrectAnswerThree());
+
+        for (Button button : buttonList) {
+
+            int random = (int)(Math.random() * (possibleAnswersList.size() - 1));
+
+            button.setText(possibleAnswersList.get(random));
+            possibleAnswersList.remove(random);
+        }
+
+
+
+
+    }
+
     @OnClick(R.id.next_question_button)
         protected void nextQuestion () {
     }
